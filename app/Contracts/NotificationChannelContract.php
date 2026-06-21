@@ -6,5 +6,5 @@ use App\Models\Notification;
 
 interface NotificationChannelContract
 {
-    public function send(Notification $notification): bool;
+    public function send(Notification $notification): void;
 }

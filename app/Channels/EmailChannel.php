@@ -7,10 +7,8 @@ use App\Models\Notification;
 
 class EmailChannel implements NotificationChannelContract
 {
-    public function send(Notification $notification): bool
+    public function send(Notification $notification): void
     {
-        // هنكتب الكود الحقيقي بعدين
-
-        return true;
+        // Logic to send email notification
     }
 }

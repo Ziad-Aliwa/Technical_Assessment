@@ -2,50 +2,31 @@
 
 namespace App\Services;
 
-use App\Contracts\NotificationChannelContract;
 use App\Enums\NotificationChannel;
 use App\Enums\NotificationStatus;
-use App\Models\Notification;
+use App\Jobs\SendNotificationJob;
 use App\Models\Ticket;
-use InvalidArgumentException;
 
 class NotificationManager
 {
+    public function __construct(
+        protected NotificationService $notificationService
+    ) {}
+
     /**
      * Create notification records and dispatch them.
      */
-    public function send(Ticket $ticket, array $channels): void
+    public function send(Ticket $ticket): void
     {
-        foreach ($channels as $channel) {
+        foreach (config('notifications.channels') as $channel => $class) {
 
-            $notification = Notification::create([
+            $notification = $this->notificationService->createNotification([
                 'ticket_id' => $ticket->id,
-                'channel' => $channel,
+                'channel' => NotificationChannel::from($channel),
                 'status' => NotificationStatus::PENDING,
             ]);
 
-            $driver = $this->resolveChannel($channel);
-
-            // Job here
-            
-
-            $driver->send($notification);
+            SendNotificationJob::dispatch($notification);
         }
-    }
-
-    /**
-     * Resolve the notification channel from config.
-     */
-    private function resolveChannel(NotificationChannel $channel): NotificationChannelContract
-    {
-        $class = config('notifications.channels')[$channel->value] ?? null;
-
-        if (!$class) {
-            throw new InvalidArgumentException(
-                "Notification channel [{$channel->value}] is not registered."
-            );
-        }
-
-        return app($class);
     }
 }

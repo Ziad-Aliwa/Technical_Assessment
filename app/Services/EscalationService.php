@@ -2,7 +2,6 @@
 
 namespace App\Services;
 
-use App\Enums\NotificationChannel;
 use App\Enums\TicketStatus;
 use App\Models\Ticket;
 use Illuminate\Support\Facades\DB;
@@ -22,13 +21,7 @@ class EscalationService
                 'escalated_at' => now(),
             ]);
 
-            $this->notificationManager->send(
-                $ticket,
-                [
-                    NotificationChannel::EMAIL,
-                    NotificationChannel::SLACK,
-                ]
-            );
+            $this->notificationManager->send($ticket);
         });
 
         return $ticket->fresh();
