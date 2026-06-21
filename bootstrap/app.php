@@ -8,7 +8,6 @@ use App\Exceptions\TicketAlreadyEscalatedException;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Throwable;
 
 return Application::configure(basePath: dirname(__DIR__))
     ->withRouting(

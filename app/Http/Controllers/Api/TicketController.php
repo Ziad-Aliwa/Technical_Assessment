@@ -3,10 +3,10 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
-use App\Services\TicketService;
 use App\Http\Resources\TicketResource;
-use Illuminate\Database\Eloquent\ModelNotFoundException;
-use Throwable;
+use App\Models\Ticket;
+use App\Services\TicketService;
+use App\Support\ApiResponse;
 
 class TicketController extends Controller
 {
@@ -14,29 +14,33 @@ class TicketController extends Controller
         protected TicketService $ticketService
     ) {}
 
-    public function escalate(int $id)
+
+    public function index()
     {
-        try {
+        $tickets = $this->ticketService->getAll();
 
-            $ticket = $this->ticketService->escalate($id);
+        return ApiResponse::success(
+            TicketResource::collection($tickets),
+            'Tickets retrieved successfully.'
+        );
+    }
+    
+    public function escalate(Ticket $ticket)
+    {
+        $ticket = $this->ticketService->escalate($ticket);
 
-            return response()->json([
-                'success' => true,
-                'message' => 'Ticket escalated successfully.',
-                'data' => new TicketResource($ticket),
-            ]);
-        } catch (ModelNotFoundException) {
+        return ApiResponse::success(
+            new TicketResource($ticket),
+            'Ticket escalated successfully.'
+        );
+    }
 
-            return response()->json([
-                'success' => false,
-                'message' => 'Ticket not found.',
-            ], 404);
-        } catch (Throwable $e) {
 
-            return response()->json([
-                'success' => false,
-                'message' => $e->getMessage(),
-            ], 500);
-        }
+    public function show(Ticket $ticket)
+    {
+        return ApiResponse::success(
+            new TicketResource($ticket),
+            'Ticket retrieved successfully.'
+        );
     }
 }

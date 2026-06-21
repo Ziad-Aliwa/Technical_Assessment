@@ -17,11 +17,15 @@ class TicketResource extends JsonResource
 
             'description' => $this->description,
 
-            'priority' => $this->priority,
+            'priority' => $this->priority->value,
 
-            'status' => $this->status,
+            'status' => $this->status->value,
 
-            'escalated_at' => $this->escalated_at,
+            'escalated_at' => $this->escalated_at?->toISOString(),
+
+            'created_at' => $this->created_at?->toISOString(),
+
+            'updated_at' => $this->updated_at?->toISOString(),
 
             'customer' => [
                 'id' => $this->customer->id,
@@ -34,6 +38,7 @@ class TicketResource extends JsonResource
                 'name' => $this->agent->user->name,
                 'department' => $this->agent->department,
             ],
+
         ];
     }
 }
