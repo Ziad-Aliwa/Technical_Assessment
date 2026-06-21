@@ -13,9 +13,6 @@ class NotificationManager
         protected NotificationService $notificationService
     ) {}
 
-    /**
-     * Create notification records and dispatch them.
-     */
     public function send(Ticket $ticket): void
     {
         foreach (config('notifications.channels') as $channel => $class) {
@@ -26,7 +23,7 @@ class NotificationManager
                 'status' => NotificationStatus::PENDING,
             ]);
 
-            SendNotificationJob::dispatch($notification);
+            SendNotificationJob::dispatch($notification->id);
         }
     }
 }
