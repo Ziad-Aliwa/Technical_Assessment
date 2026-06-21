@@ -3,8 +3,8 @@
 namespace App\Services;
 
 use App\Enums\TicketStatus;
+use App\Exceptions\TicketAlreadyEscalatedException;
 use App\Models\Ticket;
-use Illuminate\Database\Eloquent\ModelNotFoundException;
 
 class TicketService
 {
@@ -12,16 +12,10 @@ class TicketService
         protected EscalationService $escalationService
     ) {}
 
-    public function escalate(int $ticketId): Ticket
+    public function escalate(Ticket $ticket): Ticket
     {
-        $ticket = Ticket::find($ticketId);
-
-        if (! $ticket) {
-            throw new ModelNotFoundException('Ticket not found.');
-        }
-
         if ($ticket->status === TicketStatus::ESCALATED) {
-            throw new \Exception('Ticket is already escalated.');
+            throw new TicketAlreadyEscalatedException();
         }
 
         return $this->escalationService->escalate($ticket);
