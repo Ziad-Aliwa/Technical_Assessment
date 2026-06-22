@@ -1,59 +1,364 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# Flojics Technical Assessment
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+## Help Desk Ticket Escalation System
 
-## About Laravel
+A Laravel 12 + Vue 3 application that extends a Help Desk SaaS platform with a complete **Ticket Escalation** workflow, asynchronous notifications, retry mechanisms, and a clean Service Layer architecture.
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+---
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+# Features
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+* Ticket Escalation
+* Email & Slack Notifications
+* Queue-Based Notification Processing
+* Automatic Retry Strategy
+* Notification Attempt Tracking
+* RESTful API
+* Vue 3 Frontend
+* Service Layer Architecture
+* Strategy Pattern for Notification Channels
+* Feature Tests
+* Clean JSON API Responses
 
-## Learning Laravel
+---
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework. You can also check out [Laravel Learn](https://laravel.com/learn), where you will be guided through building a modern Laravel application.
+# Tech Stack
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+### Backend
 
-## Laravel Sponsors
+* Laravel 12
+* PHP 8.3+
+* MySQL
+* Laravel Queues
+* Eloquent ORM
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+### Frontend
 
-### Premium Partners
+* Vue 3
+* Vite
+* Tailwind CSS
+* Axios
 
-- **[Vehikl](https://vehikl.com)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Redberry](https://redberry.international/laravel-development)**
-- **[Active Logic](https://activelogic.com)**
+### Testing
 
-## Contributing
+* PHPUnit
+* Feature Tests
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+---
 
-## Code of Conduct
+# Project Structure
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+```text
+app
+├── Contracts
+├── Enums
+├── Exceptions
+├── Http
+│   ├── Controllers
+│   └── Resources
+├── Jobs
+├── Models
+├── Services
+├── Support
+└── Channels
 
-## Security Vulnerabilities
+database
+├── factories
+├── migrations
+└── seeders
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+resources
+└── js
+    ├── api
+    ├── components
+    ├── pages
+    └── router
 
-## License
+tests
+└── Feature
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+docs
+├── RequirementAnalysis.md
+├── ArchitectureNotes.md
+└── DatabaseDesign.md
+```
+
+---
+
+# System Architecture
+
+```mermaid
+flowchart TD
+
+A[Vue Frontend]
+
+--> B[TicketController]
+
+--> C[TicketService]
+
+--> D[EscalationService]
+
+--> E[NotificationManager]
+
+--> F[NotificationService]
+
+--> G[(Database)]
+
+E --> H[Queue]
+
+H --> I[SendNotificationJob]
+
+I --> J[Email]
+
+I --> K[Slack]
+```
+
+---
+
+# Installation
+
+## Clone Repository
+
+```bash
+git clone <repository-url>
+
+cd Flojics_Technical_Assessment
+```
+
+---
+
+## Install PHP Dependencies
+
+```bash
+composer install
+```
+
+---
+
+## Install JavaScript Dependencies
+
+```bash
+npm install
+```
+
+---
+
+## Environment Configuration
+
+Copy the environment file.
+
+```bash
+cp .env.example .env
+```
+
+Generate the application key.
+
+```bash
+php artisan key:generate
+```
+
+Configure your database credentials inside `.env`.
+
+Example:
+
+```env
+DB_CONNECTION=mysql
+DB_HOST=127.0.0.1
+DB_PORT=3306
+DB_DATABASE=helpdesk
+DB_USERNAME=root
+DB_PASSWORD=
+```
+
+---
+
+## Run Migrations
+
+```bash
+php artisan migrate
+```
+
+---
+
+## Seed Database
+
+```bash
+php artisan db:seed
+```
+
+---
+
+# Running the Application
+
+## Start Laravel
+
+```bash
+php artisan serve
+```
+
+---
+
+## Start Vite
+
+```bash
+npm run dev
+```
+
+---
+
+## Start Queue Worker
+
+```bash
+php artisan queue:work
+```
+
+---
+
+# API Endpoints
+
+| Method | Endpoint                     | Description              |
+| ------ | ---------------------------- | ------------------------ |
+| GET    | `/api/tickets`               | Retrieve all tickets     |
+| GET    | `/api/tickets/{id}`          | Retrieve a single ticket |
+| POST   | `/api/tickets/{id}/escalate` | Escalate a ticket        |
+
+---
+
+# Example Response
+
+```json
+{
+    "success": true,
+    "message": "Ticket escalated successfully.",
+    "data": {
+        "id": 1,
+        "status": "Escalated",
+        "priority": "High"
+    },
+    "timestamp": "2026-06-22T12:30:00Z"
+}
+```
+
+---
+
+# Notification Flow
+
+```mermaid
+sequenceDiagram
+
+Client->>TicketController: POST /tickets/{id}/escalate
+
+TicketController->>TicketService: Escalate Ticket
+
+TicketService->>EscalationService: Validate
+
+EscalationService->>Database: Update Ticket
+
+EscalationService->>NotificationManager: Send Notifications
+
+NotificationManager->>Queue: Dispatch Job
+
+Queue->>SendNotificationJob: Process
+
+SendNotificationJob->>Email: Send
+
+SendNotificationJob->>Slack: Send
+
+SendNotificationJob->>Database: Save Notification Status
+```
+
+---
+
+# Database
+
+The system consists of six main tables.
+
+* Users
+* Customers
+* Agents
+* Tickets
+* Notifications
+* Notification Attempts
+
+For more details, see:
+
+* `docs/DatabaseDesign.md`
+
+---
+
+# Testing
+
+Run all tests.
+
+```bash
+php artisan test
+```
+
+Run a specific test.
+
+```bash
+php artisan test --filter=TicketApiTest
+```
+
+```bash
+php artisan test --filter=EscalationTest
+```
+
+```bash
+php artisan test --filter=NotificationJobTest
+```
+
+---
+
+# Documentation
+
+Additional documentation is available in the `docs` directory.
+
+* Requirement Analysis
+* Architecture Notes
+* Database Design
+
+---
+
+# Future Improvements
+
+* SMS Notifications
+* WhatsApp Notifications
+* Push Notifications
+* Microsoft Teams Integration
+* Notification Templates
+* Escalation Levels
+* Admin Dashboard
+* Audit Logs
+* Laravel Horizon Monitoring
+* Dead Letter Queue
+
+---
+
+# Design Principles
+
+This project follows:
+
+* SOLID Principles
+* Service Layer Pattern
+* Strategy Pattern
+* Dependency Injection
+* Separation of Concerns
+* Repository-ready Structure
+* RESTful API Design
+
+---
+
+# Author
+
+**Ziad Bassam**
+
+Backend Developer
+
+Laravel | PHP | Vue.js | MySQL
+
+---
+
+# License
+
+This project was created as part of the **Flojics Technical Assessment**.
