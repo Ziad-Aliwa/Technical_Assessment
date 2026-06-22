@@ -41,7 +41,7 @@ class SendNotificationJob implements ShouldQueue
 
     public function handle(NotificationService $notificationService): void
     {
-        $notification = Notification::findOrFail($this->notificationId);
+        $notification = Notification::with('ticket')->findOrFail($this->notificationId);
 
         $driver = $this->resolveChannel(
             $notification->channel
@@ -73,7 +73,7 @@ class SendNotificationJob implements ShouldQueue
 
     public function failed(Throwable $exception): void
     {
-        $notification = Notification::find($this->notificationId);
+        $notification = Notification::with('ticket')->find($this->notificationId);
 
         if (! $notification) {
             return;

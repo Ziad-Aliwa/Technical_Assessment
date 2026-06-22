@@ -22,7 +22,7 @@ class TicketFactory extends Factory
 
             'description' => fake()->paragraph(),
 
-            'priority' => fake()->randomElement(TicketPriority::cases()),
+            'priority' => fake()->randomElement(TicketPriority::cases())->value,
 
             'status' => TicketStatus::OPEN,
 
