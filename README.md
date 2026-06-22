@@ -353,7 +353,7 @@ This project follows:
 
 **Ziad Bassam**
 
-Backend Developer
+Full-Stack Developer
 
 Laravel | PHP | Vue.js | MySQL
 
