@@ -1,10 +1,11 @@
-<template>
-    <div>
-        <h1>Flojics Technical Assessment</h1>
-        <p>Vue is working 🚀</p>
-    </div>
-</template>
-
 <script setup>
 
+import TicketsPage from './pages/TicketsPage.vue';
+
 </script>
+
+<template>
+
+<TicketsPage />
+
+</template>
